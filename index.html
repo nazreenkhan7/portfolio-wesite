@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazreen Iksar Hasan - Automation & Robotics Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <style>
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        body.dark-mode #preloader {
+            background: #1a1a1a;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #007bff;
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        body {
+            line-height: 1.6;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body.dark-mode {
+            background: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.5s ease;
+        }
+
+        body.dark-mode nav {
+            background: #2c2c2c !important;
+        }
+
+        body.dark-mode nav a.nav-link {
+            color: #f0f0f0 !important;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #home {
+            position: relative;
+            background: linear-gradient(135deg, #007bff, #00ddeb);
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://via.placeholder.com/1920x1080?text=Tech+Background') no-repeat center center/cover;
+            opacity: 0.2;
+            transform: translateY(0);
+            transition: transform 0.1s ease;
+        }
+
+        #home.parallax::before {
+            transform: translateY(calc(var(--scroll) * 0.5));
+        }
+
+        .typed-text {
+            display: inline-block;
+            min-height: 1.5em;
+        }
+
+        body.dark-mode #about,
+        body.dark-mode #timeline,
+        body.dark-mode #contact {
+            background: #2c2c2c;
+        }
+
+        body.dark-mode #projects {
+            background: #1a1a1a;
+        }
+
+        .skills-list .progress {
+            height: 25px;
+            margin-bottom: 1rem;
+            background-color: #e9ecef;
+        }
+
+        body.dark-mode .skills-list .progress {
+            background-color: #3a3a3a;
+        }
+
+        .progress-bar {
+            transition: width 1.5s ease-in-out;
+        }
+
+        .project-card {
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-card img {
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+            height: 200px;
+        }
+
+        body.dark-mode .card {
+            background: #2c2c2c !important;
+        }
+
+        .project-link, .details-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            margin-right: 1rem;
+        }
+
+        .project-link:hover, .details-link:hover {
+            text-decoration: underline;
+        }
+
+        body.dark-mode .contact-form {
+            background: #2c2c2c !important;
+        }
+
+        body.dark-mode .form-control {
+            background: #3a3a3a;
+            border-color: #555;
+            color: #f0f0f0;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+
+        .filter-buttons {
+            margin-bottom: 2rem;
+        }
+
+        .filter-buttons .btn {
+            margin: 0.3rem;
+        }
+
+        .video-modal .modal-content,
+        .details-modal .modal-content {
+            background: #fff;
+        }
+
+        body.dark-mode .video-modal .modal-content,
+        body.dark-mode .details-modal .modal-content {
+            background: #2c2c2c;
+        }
+
+        .video-modal .modal-body {
+            padding: 0;
+        }
+
+        .video-modal iframe {
+            width: 100%;
+            height: 400px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #007bff;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        body.dark-mode .timeline::before {
+            background: #00ddeb;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 2rem 0;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        body.dark-mode .timeline-content {
+            background: #3a3a3a;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+            border-left-color: #f8f9fa;
+        }
+
+        body.dark-mode .timeline-item:nth-child(odd) .timeline-content::before {
+            border-left-color: #3a3a3a;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+            border-right-color: #f8f9fa;
+        }
+
+        body.dark-mode .timeline-item:nth-child(even) .timeline-content::before {
+            border-right-color: #3a3a3a;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #007bff;
+            border-radius: 50%;
+            top: 20px;
+        }
+
+        body.dark-mode .timeline-dot {
+            background: #00ddeb;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        body.dark-mode footer {
+            background: #2c2c2c;
+        }
+
+        .social-icons a {
+            color: #007bff;
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        body.dark-mode .social-icons a {
+            color: #00ddeb;
+        }
+
+        .social-icons a:hover {
+            color: #0056b3;
+        }
+
+        body.dark-mode .social-icons a:hover {
+            color: #00b7c2;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+
+        #backToTop:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        body.dark-mode #backToTop {
+            background: #00ddeb;
+        }
+
+        body.dark-mode #backToTop:hover {
+            background: #00b7c2;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-content::before {
+                left: -20px !important;
+                border-right-color: #f8f9fa !important;
+                border-left-color: transparent !important;
+            }
+
+            body.dark-mode .timeline-content::before {
+                border-right-color: #3a3a3a !important;
+            }
+
+            .timeline-dot {
+                left: 12px !important;
+                right: auto !important;
+            }
+
+            .video-modal iframe {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .video-modal iframe {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Nazreen Iksar Hasan</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#timeline">Timeline</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nazreen.pdf" target="_blank">Resume</a></li>
+                    <li class="nav-item">
+                        <button class="theme-toggle" onclick="toggleTheme()">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="section parallax" data-aos="fade-up">
+        <div class="container text-center">
+            <h1 class="display-4">Hi, I'm Nazreen Iksar Hasan</h1>
+            <p class="lead">Automation & Robotics Engineer | <span class="typed-text"></span></p>
+        </div>
+    </section>
+
+    <section id="about" class="section bg-light" data-aos="fade-up">
+        <div class="container">
+            <h2 class="text-center mb-5">About Me</h2>
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <p class="text-center">I'm an Automation and Robotics Engineering student with expertise in hardware and software integration, specializing in AI-driven solutions for robotics and IoT. My skills include SCADA, PLC programming, and embedded systems development using Raspberry Pi, Arduino, ESP8266, and ESP32.</p>
+                    <p class="text-center">I have strong proficiency in Python for AI and automation, SQL for database management, and web technologies like Bootstrap and JavaScript for building responsive interfaces. My flagship project is a safety-based patrolling robot powered by Raspberry Pi with AI integration and multiple sensors for real-time monitoring.</p>
+                    <p class="text-center">Key Skills:</p>
+                    <div class="skills-list mx-auto" style="max-width: 800px;">
+                        <div class="skill-item">
+                            <p>SCADA & PLC Programming</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" data-width="90" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p>Embedded Systems (Raspberry Pi, Arduino, ESP8266, ESP32)</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" data-width="85" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p>Python for AI & Automation</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" data-width="95" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">95%</div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p>SQL & Database Management</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" data-width="80" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p>Bootstrap & JavaScript for Web Development</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" data-width="75" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <p>Robotics & IoT Development</p>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 0%" data-width="90" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="text-center mb-5">My Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <h5>2021 - Started Automation & Robotics Engineering</h5>
+                        <p>Began my journey in Automation and Robotics Engineering, focusing on hardware and software integration.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <h5>2024 - Developed Gesture-Controlled Robot</h5>
+                        <p>Designed a gesture-controlled car using Arduino, winning first prize at Pillai College of Engineering.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <h5>2025 - Built AI-Powered Patrolling Robot</h5>
+                        <p>Created a safety-focused patrolling robot with AI integration, showcasing real-time monitoring capabilities.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <h5>2023 - Developed 4 DOF Robotic Arm</h5>
+                        <p>Constructed a 4 DOF robotic arm for pick-and-place operations, demonstrating robotic kinematics.</p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="text-center mb-4">My Projects</h2>
+            <div class="filter-buttons text-center">
+                <button class="btn btn-outline-primary active" onclick="filterProjects('all')">All</button>
+                <button class="btn btn-outline-primary" onclick="filterProjects('ai')">AI</button>
+                <button class="btn btn-outline-primary" onclick="filterProjects('robotics')">Robotics</button>
+                <button class="btn btn-outline-primary" onclick="filterProjects('iot')">IoT</button>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3 g-4" id="project-container">
+                <div class="col project-item" data-category="ai robotics">
+                    <div class="card h-100 project-card">
+                        <img src="mega.jpeg" class="card-img-top" alt="Patrolling Robot">
+                        <div class="card-body">
+                            <h3 class="card-title">AI-Powered Patrolling Robot</h3>
+                            <p class="card-text">A safety-focused patrolling robot using Raspberry Pi, integrated with AI (OpenCV) and multiple sensors (ultrasonic, gas, thermal) and webcam for live streaming and real-time monitoring and obstacle avoidance in hazardous environments. It triggers an alarm and sends an email when unusual activity is detected, enabling timely action.</p>
+                            <a href="#" class="project-link" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">View Project Video</a>
+                            <a href="#" class="details-link" data-bs-toggle="modal" data-bs-target="#detailsModal" data-title="AI-Powered Patrolling Robot" data-details="Technologies: Raspberry Pi, OpenCV, Python, Sensors (Ultrasonic, Gas, Thermal), Webcam<br>Challenges: Real-time data processing, obstacle avoidance in dynamic environments<br>Outcomes: Successfully deployed in a controlled environment, reduced response time to hazards by 30%.">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col project-item" data-category="robotics">
+                    <div class="card h-100 project-card">
+                        <img src="ges.jpg" class="card-img-top" alt="Gesture Robot">
+                        <div class="card-body">
+                            <h3 class="card-title">Gesture-Controlled Robot</h3>
+                            <p class="card-text">Designed and built a gesture-controlled car using Arduino Uno as the main controller. Hand gestures are captured through an accelerometer (e.g., MPU6050), processed by Arduino, and transmitted wirelessly (using RF or Bluetooth modules) to control the car's movement—forward, backward, left, and right. This project demonstrates wireless communication, sensor integration, and real-time control, offering an interactive approach to robotic vehicle navigation.</p>
+                            <a href="#" class="project-link" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://www.youtube.com/embed/-0HCNMU6KrM">View Project Video</a>
+                            <a href="#" class="details-link" data-bs-toggle="modal" data-bs-target="#detailsModal" data-title="Gesture-Controlled Robot" data-details="Technologies: Arduino Uno, MPU6050 Accelerometer, RF/Bluetooth Modules<br>Challenges: Accurate gesture recognition, reliable wireless communication<br>Outcomes: Won first prize at Pillai College of Engineering, achieved 95% control accuracy.">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col project-item" data-category="robotics iot">
+                    <div class="card h-100 project-card">
+                        <img src="dof.jpeg" class="card-img-top" alt="Robotic Arm">
+                        <div class="card-body">
+                            <h3 class="card-title">4 DOF Robotic Arm</h3>
+                            <p class="card-text">Developed a 4 Degrees of Freedom robotic arm using Arduino Uno, servo motors, and potentiometers for manual control. Each joint (base, shoulder, elbow, and wrist) is controlled via a dedicated potentiometer, enabling precise joint movement. The end effector (gripper) is operated by an additional servo for object gripping and release. This setup successfully performs basic pick-and-place operations, demonstrating practical implementation of robotic kinematics and manual control systems.</p>
+                            <a href="#" class="project-link" data-bs-toggle="modal" data-bs-target="#videoModal" data-video="https://www.youtube.com/embed/Q9JOKQaIR1w">View Project Video</a>
+                            <a href="#" class="details-link" data-bs-toggle="modal" data-bs-target="#detailsModal" data-title="4 DOF Robotic Arm" data-details="Technologies: Arduino Uno, Servo Motors, Potentiometers<br>Challenges: Precise joint control, maintaining stability during pick-and-place<br>Outcomes: Successfully performed pick-and-place tasks with 90% accuracy, enhanced understanding of robotic kinematics.">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section bg-light" data-aos="fade-up">
+        <div class="container">
+            <h2 class="text-center mb-5">Contact Me</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card contact-form">
+                        <div class="card-body">
+                            <form id="contactForm" action="/submit" method="POST">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="subject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="subject" name="subject" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="6" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="social-icons">
+                <a href="https://www.linkedin.com/in/nazreeniksarhasan" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/yourprofile" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://twitter.com/Nazreen_khan11" target="_blank"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p class="mt-3">© 2025 Nazreen Iksar Hasan. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="modal fade video-modal" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="videoModalLabel">Project Video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <iframe src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Details Modal -->
+    <div class="modal fade details-modal" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Project Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="projectDetailsContent"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Message Modal -->
+    <div class="modal fade" id="formMessageModal" tabindex="-1" aria-labelledby="formMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formMessageModalLabel">Message Status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="formMessageContent"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Preloader
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => preloader.style.display = 'none', 500);
+        });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Theme toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.theme-toggle i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Typed.js for animated text
+        const typed = new Typed('.typed-text', {
+            strings: ['Innovating with AI, IoT, Cloud, RPA, and Embedded Systems', 'Building the Future of Robotics', 'Passionate about Automation'],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true,
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', function () {
+            const homeSection = document.getElementById('home');
+            const scrollPosition = window.pageYOffset;
+            homeSection.style.setProperty('--scroll', scrollPosition + 'px');
+        });
+
+        // Animate skill bars on scroll
+        const skillBars = document.querySelectorAll('.progress-bar');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width + '%';
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillBars.forEach(bar => observer.observe(bar));
+
+        // Project filtering
+        function filterProjects(category) {
+            const items = document.querySelectorAll('.project-item');
+            const buttons = document.querySelectorAll('.filter-buttons .btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    const categories = item.getAttribute('data-category').split(' ');
+                    if (categories.includes(category)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Video modal handling
+        const videoModal = document.getElementById('videoModal');
+        videoModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const videoUrl = button.getAttribute('data-video');
+            const iframe = videoModal.querySelector('iframe');
+            iframe.src = videoUrl;
+        });
+
+        videoModal.addEventListener('hide.bs.modal', function () {
+            const iframe = videoModal.querySelector('iframe');
+            iframe.src = '';
+        });
+
+        // Project details modal handling
+        const detailsModal = document.getElementById('detailsModal');
+        detailsModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const title = button.getAttribute('data-title');
+            const details = button.getAttribute('data-details');
+            document.getElementById('detailsModalLabel').textContent = title;
+            document.getElementById('projectDetailsContent').innerHTML = details;
+        });
+
+        // Form validation
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                e.preventDefault();
+                alert('Please enter a valid email address.');
+            }
+        });
+
+        // Form message modal handling
+        const formMessageModal = document.getElementById('formMessageModal');
+        formMessageModal.addEventListener('show.bs.modal', function (event) {
+            const alert = document.querySelector('.alert');
+            if (alert) {
+                const message = alert.getAttribute('data-message');
+                const type = alert.getAttribute('data-type');
+                const content = document.getElementById('formMessageContent');
+                content.textContent = message;
+                content.className = type === 'success' ? 'text-success' : 'text-danger';
+            }
+        });
+
+        // Back to Top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
